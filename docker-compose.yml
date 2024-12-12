@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  compliance_mongodb:
+    image: mongo
+    container_name: compliance_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: aya
+      MONGO_INITDB_ROOT_PASSWORD: dior
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
