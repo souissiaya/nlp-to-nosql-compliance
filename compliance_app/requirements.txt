@@ -1,3 +1,4 @@
+Flask
 pymongo
 textblob
 spacy==3.7.0  

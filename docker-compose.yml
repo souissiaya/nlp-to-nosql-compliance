@@ -12,5 +12,16 @@ services:
     volumes:
       - mongodb_data:/data/db
 
+  compliance_app:
+    build:
+      context: ./compliance_app
+    container_name: compliance_app
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://aya:dior@compliance_mongodb:27017
+    depends_on:
+      - compliance_mongodb
+
 volumes:
   mongodb_data:
