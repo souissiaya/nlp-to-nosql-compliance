@@ -26,7 +26,7 @@ def parse_query(user_query):
 
     amount_lt_match = patterns["amount_lt"].search(user_query)
     if amount_lt_match:
-        if "amount" in query:
+        if "amount" in mongo_query:
             mongo_query["amount"].update({"$lt": int(amount_lt_match.group(1))})
         else:
             mongo_query["amount"] = {"$lt": int(amount_lt_match.group(1))}
@@ -41,7 +41,7 @@ def parse_query(user_query):
 
     date_before_match = patterns["date_before"].search(user_query)
     if date_before_match:
-        if "date" in query:
+        if "date" in mongo_query:
             mongo_query["date"].update({"$lt": date_before_match.group(1)})
         else:
             mongo_query["date"] = {"$lt": date_before_match.group(1)}
