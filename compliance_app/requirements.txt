@@ -2,3 +2,5 @@ Flask
 pymongo
 textblob
 spacy==3.7.0  
+groq
+python-dotenv

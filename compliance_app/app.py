@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from pymongo import MongoClient
 from mongo_operations import insert_sample_data
-from nlp_operations import parse_query, execute_query
+from nlp_operations import *
 
 
 app = Flask(__name__)
@@ -30,12 +30,30 @@ def query_database():
     if not user_query:
         return jsonify({"error": "No query provided"}), 400
 
-    mongo_query = parse_query(user_query)
+    mongo_query = parse_query_version_1(user_query)
     if not mongo_query:
         return jsonify({"message": "Could not construct a query from the input."}), 400
 
     results = execute_query(collection, mongo_query)
     return jsonify({"query": mongo_query, "results": results})
+
+@app.route('/query2', methods=['POST'])
+def query_database2():
+    """
+    NLP queries and return matching records.
+    """
+    data = request.get_json()
+    user_query = data.get('query', '')
+
+    if not user_query:
+        return jsonify({"error": "No query provided"}), 400
+
+    mongo_query = parse_query_version_2(user_query)
+    if not mongo_query:
+        return jsonify({"message": "Could not construct a query from the input."}), 400
+
+    #results = execute_query(collection, mongo_query)
+    return jsonify({"query": mongo_query, "results": "results"})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
