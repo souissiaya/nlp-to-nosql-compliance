@@ -34,6 +34,7 @@ def query_database():
     if not mongo_query:
         return jsonify({"message": "Could not construct a query from the input."}), 400
 
+    app.logger.info(mongo_query)
     results = execute_query(collection, mongo_query)
     return jsonify({"query": mongo_query, "results": results})
 
@@ -52,8 +53,10 @@ def query_database2():
     if not mongo_query:
         return jsonify({"message": "Could not construct a query from the input."}), 400
 
-    #results = execute_query(collection, mongo_query)
-    return jsonify({"query": mongo_query, "results": "results"})
+    app.logger.info(mongo_query)
+    results = execute_query(collection, mongo_query)
+
+    return jsonify({"query": mongo_query, "results": results})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

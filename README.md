@@ -47,3 +47,15 @@ curl -X POST -H "Content-Type: application/json" \
 ```
 
 This will return records matching the parsed query, such as transactions flagged as "flagged", amounts greater than 5000, and in the "North America" region.
+
+### 5. Query Data Using Groq's LLM
+
+To query the database using Groq's LLM, send a `POST` request to the `/query2` endpoint. You can use `curl` as shown below:
+
+```bash
+curl -X POST -H "Content-Type: application/json" \
+    -d '{"query": "Show flagged transactions above 5000 in North America"}' \
+    http://localhost:5000/query2
+```
+
+This will return records matching the parsed query, such as transactions flagged as "flagged", amounts greater than 5000, and in the "North America" region.

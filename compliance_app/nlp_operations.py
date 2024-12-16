@@ -1,10 +1,10 @@
 import pymongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-<<<<<<< HEAD
 from dotenv import load_dotenv
 import os
 from groq import Groq
+import re, ast
 
 # Load .env variables
 load_dotenv()
@@ -13,12 +13,6 @@ def parse_query_version_1(user_query):
     """
     Parses a natural language query into a MongoDB query.
     """
-    nlp = spacy.load("en_core_web_sm")
-    doc = nlp(user_query.lower())
-=======
-import re
-def parse_query(user_query):
->>>>>>> aya
     mongo_query = {}
 
     # Patterns for analyzing the queries
@@ -80,8 +74,9 @@ def parse_query_version_2(user_query):
     - `date`: The date of the transaction in the format "YYYY-MM-DD" (e.g., "2021-04-12").
     - `status`: The status of the transaction, indicating whether it's "approved" or "flagged".
 
-    Based on the user's natural language query, generate only the MongoDB query as output **without any spaces** and **without any escape characters** to filter this collection. You would pass the resulting MongoDB query directly to MongoDB for querying.
-
+    Based on the user's natural language query, generate only the MongoDB query respecting the order of fields in the description as output **without any spaces** and **without any escape characters** to filter this collection. You would pass the resulting MongoDB query directly to MongoDB for querying.
+    return a dictionary without spaces, only the result ! without presenting it!
+    the keys of the dictionary are only among amount, region, date, status
     Query: "{user_query}"
     """
     
@@ -95,7 +90,7 @@ def parse_query_version_2(user_query):
     )
     
     # Extract the MongoDB query from the response.
-    return chat_completion.choices[0].message.content
+    return ast.literal_eval(chat_completion.choices[0].message.content)
 
 def execute_query(collection, mongo_query):
     """
