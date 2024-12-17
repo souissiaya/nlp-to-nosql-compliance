@@ -22,7 +22,7 @@ def read_data():
 @app.route('/query', methods=['POST'])
 def query_database():
     """
-    NLP queries and return matching records.
+    Natural language queries and return matching records using NLP.
     """
     data = request.get_json()
     user_query = data.get('query', '')
@@ -41,7 +41,7 @@ def query_database():
 @app.route('/query2', methods=['POST'])
 def query_database2():
     """
-    NLP queries and return matching records.
+    Natural language queries and return matching records using LLM.
     """
     data = request.get_json()
     user_query = data.get('query', '')

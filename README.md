@@ -59,3 +59,8 @@ curl -X POST -H "Content-Type: application/json" \
 ```
 
 This will return records matching the parsed query, such as transactions flagged as "flagged", amounts greater than 5000, and in the "North America" region.
+
+### Explore Backend container Logs
+```bash
+docker logs compliance_app
+```
