@@ -1,27 +1,33 @@
+# Docker Compose file version
 version: '3.8'
 
+# Define services (containers) to be run
 services:
-  compliance_mongodb:
-    image: mongo
-    container_name: compliance_mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: aya
-      MONGO_INITDB_ROOT_PASSWORD: dior
-    volumes:
-      - mongodb_data:/data/db
 
+  # MongoDB Service
+  compliance_mongodb:
+    image: mongo  # Use the official MongoDB Docker image
+    container_name: compliance_mongodb  # Name the container for easy reference
+    ports:
+      - "27017:27017"  # Map port 27017 on the host to port 27017 in the container (MongoDB default port)
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: aya  # Set the root username for MongoDB
+      MONGO_INITDB_ROOT_PASSWORD: dior  # Set the root password for MongoDB
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data using a named volume
+
+  # Flask Application Service
   compliance_app:
     build:
-      context: ./compliance_app
-    container_name: compliance_app
+      context: ./compliance_app  # Path to the directory containing the Dockerfile for the app
+    container_name: compliance_app  # Name the container for the Flask app
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Map port 5000 on the host to port 5000 in the container (Flask default port)
     environment:
-      - MONGO_URI=mongodb://aya:dior@compliance_mongodb:27017
+      - MONGO_URI=mongodb://aya:dior@compliance_mongodb:27017  # Connection string for MongoDB
     depends_on:
-      - compliance_mongodb
+      - compliance_mongodb  # Ensure MongoDB starts before this service
 
+# Define named volumes to persist data
 volumes:
-  mongodb_data:
+  mongodb_data:  # Named volume for MongoDB data storage
